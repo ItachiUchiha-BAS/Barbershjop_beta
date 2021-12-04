@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+
+
+
+{% block content%}
+<style>
+    section{
+    padding: 2rem 7%;
+    margin-top: 90px;
+    }
+</style>
+<section class="Info" id="Info">
+		<h1 class="heading"> Product <span> Info </span></h1>
+
+
+
+		<div class="row">
+			<div class="table">
+				<div class="im"><img src="{{product.image.url}}"></div>
+				<div class="ghf">
+					<div class="Name">Name: {{product.title}} </div>
+				<div class="Price">Price: {{product.price}} $ </div>
+                    {% if product.category.slug == 'cosmetic'%}
+                               {% include 'cosmetic_specification.html'%}
+                    {% elif product.category.slug == 'haircut'%}
+                               {% include 'haircut_specification.html'%}
+                    {% else %}
+                           {% include 'barber_specification.html'%}
+                    {%endif%}
+				<a href="{% url 'add-to-cart' ct_model=ct_model slug=product.slug %}"><div class="btn3">ADD</div></a>
+				</div>
+
+			</div>
+
+
+		</div>
+	</section>
+
+
+
+{%endblock content%}

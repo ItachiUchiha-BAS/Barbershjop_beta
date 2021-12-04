@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BRB</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/Style.css' %}">
+
+</head>
+<body>
+	<header class="header">
+		<a href="{% url 'base' %}" class="logo">
+			<img src="{% static 'img/hairstyle.png' %}" alt="">
+		</a>
+		<nav class="navbar">
+
+			<a href="#Home">Home</a>
+			<a href="#About">About</a>
+			<a href="#Pricing">Pricing</a>
+			<a href="#Cosmetics">Cosmetics</a>
+			<a href="#Team">Team</a>
+			<a href="#Contact">Contact</a>
+
+		</nav>
+
+		<div class="icons">
+			<div class="find">
+				<ion-icon name="search-outline"></ion-icon>
+			</div>
+			<style>
+				.cart__quantity {
+	right: 2px;
+	top: 50%;
+	transform: translateY(-130%);
+	margin-top: -10px;
+	background-color: #de707b;
+	border-radius: 100%;
+	padding: 2px;
+	color: #fff;
+	font-size: 12px;
+	min-height: 16px;
+	min-width: 16px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+.shop a{
+text-decoration:none;
+color:var(--main-color);
+}
+			</style>
+			<div class="shop">
+				<a href="{% url 'cart' %}"><ion-icon name="cash-outline"></ion-icon><span class="cart__quantity">{{cart.products.count}}</span></a>
+			</div>
+			<div class="menutoogle">
+				<ion-icon name="menu-outline"></ion-icon>
+			</div>
+		</div>
+
+		<div class="search-form">
+			<input type="search" name="search-box" placeholder="Something more...">
+			<label for="search-box">
+				<ion-icon name="search-outline"></ion-icon>
+			</label>
+		</div>
+	</header>
+	{% block content%}
+	<section class="Home" id="Home">
+		<div class="content">
+			<h3>The Art Of The Barbery</h3>
+			<p>Sinse.1919</p>
+			<a href="#Cosmetics" class="btn2"><span>Buy Cosmetics</span></a>
+			<a href="#Pricing" class="btn2"><span>Get Hair Cut</span></a>
+		</div>
+
+	</section>
+
+	<section class="About" id="About">
+		<h1 class="heading"><span>about</span> us </h1>
+		<div class="row">
+			<div class="image">
+				<img src="{% static 'img/gg.jpg' %}">
+			</div>
+			<div class="content">
+				<h3>What makes our BS special?</h3>
+				<p>We believe that going to the barber shop
+				    	 should be more than an errand. It should be an experience</p>
+				<p>It’s important to us that you get a great haircut, receive remarkable service  and build lasting relationships in a comfortable space. </p>
+				    	<p>We are committed to being an inclusive and welcoming environment for every client
+and member of our team who enter our space regardless of gender, race, sexual orientation,
+religion or politics. We celebrate the diversity within our community
+and aim to be an example of unity in England.</p>
+<a href="#" class="btn3">Learn more</a>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="Pricing" id="Pricing">
+
+		<h1 class="heading"> the <span>menu</span></h1>
+
+		<div class="box-container">
+			{% for i in haircuts%}
+
+			<div class="box">
+				<a href="{{i.get_absolute_url}}"><img src="{{i.image.url}}"></a>
+				<h1>{{i.title}}</h1>
+				<div class="price">${{i.price}} <span>$44.99</span></div>
+				<a href="{% url 'add-to-cart' ct_model=i.get_model_name slug=i.slug %}" class="btn3">Add to cart</a>
+			</div>
+			{%endfor%}
+		</div>
+
+	</section>
+	<section class="Cosmetics" id="Cosmetics">
+		<h1 class="heading"> the <span>shop</span></h1>
+		<div class="row">
+			<div class="box-container">
+				{%for i in cosmetics%}
+				<div class="{{i.boxer}}">
+					<div class="content">
+						<a href="{{i.get_absolute_url}}"><img src="{{i.image.url}}"></a>
+
+					<p>{{i.title}}</p>
+					<div class="price">${{i.price}}</div>
+					<a href="{% url 'add-to-cart' ct_model=i.get_model_name slug=i.slug %}" class="btnshop">buy</a>
+					</div>
+				</div>
+              {%endfor%}
+			</div>
+
+		</div>
+	</section>
+	<section class="Team" id="Team">
+		<h1 class="heading"> Creative <span>Team</span></h1>
+		<div class="row">
+			<div class="box-container">
+				{%for i in barbers%}
+			<div class="box">
+				<div class="content">
+						<div class="imgBx">
+							<a href="{{i.get_absolute_url}}"><img src="{{i.image.url}}"></a>
+						</div>
+						<div class="contentBx">
+							<a href="{% url 'add-to-cart' ct_model=i.get_model_name slug=i.slug %}"><h3>{{i.title}}<br><span>{{i.rank}}</span></h3></a>
+						</div>
+				</div>
+				<ul class="sci">
+				<li style="--i:1">
+					<a href="{{i.inst}}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</li>
+				<li style="--i:2">
+					<a href="{{i.vk}}">
+						<i class="fab fa-vk"></i>
+					</a>
+				</li>
+				<li style="--i:3">
+					<a href="{{i.twiter}}">
+						<i class="fab fa-twitter"></i>
+					</a>
+				</li>
+			</ul>
+
+			</div>
+				{%endfor%}
+		</div>
+		</div>
+
+	</section>
+
+
+	<section class="Contact" id="Contact">
+		<h1 class="heading"> Contact <span>Us</span></h1>
+
+		<div class="row">
+
+			<div class="content">
+				<div class="info">
+					<h3>Downtown Kitchener</h3>
+			        <p>18 Queen Street South<br>Kitchener, ON</p>
+			        <p>519-954-9333</p>
+			        <p>info@PBbarber.com</p>
+			        <a href="#">INSTAGRAM</a>
+			        <a href="#">FACEBOOK</a>
+				</div>
+				<div class="calend">
+					<p>MON:  CLOSED<br>
+					  TUES:  10  AM - 8  PM<br>
+				      WED:  10  AM - 8  PM<br>
+			         THURS:  10  AM - 8  PM<br>
+		             FRI:  10  AM - 8  PM<br>
+	                 SAT:  10  AM - 5  PM<br>
+                     SUN:  10  AM - 5  PM</p>
+
+				</div>
+			</div>
+			<iframe  class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2896.543489168395!2d-80.49199838422723!3d43.449249473612305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882bf4ed8f87cbbf%3A0x830caef7ace52173!2sDowntown%20Kitchener%20BIA!5e0!3m2!1sru!2sru!4v1636307916289!5m2!1sru!2sru" allowfullscreen="" loading="lazy"></iframe>
+
+
+
+		</div>
+
+
+	</section>
+	{%endblock content%}
+	<section class="footer">
+		<div class="shar">
+			<a href="https://www.instagram.com/zloy_karapuzik">
+				<i class="fab fa-instagram"></i>
+			</a>
+			<a href="https://vk.com/bel044ka">
+				<i class="fab fa-vk"></i>
+			</a>
+			<a href="https://twitter.com/SabanovArtem">
+				<i class="fab fa-twitter"></i>
+			</a>
+			<a href="https://www.youtube.com/watch?v=DWcJFNfaw9c">
+				<i class="fab fa-youtube"></i>
+			</a>
+		</div>
+
+		<div class="links">
+			<a href="#Home">Home</a>
+			<a href="#About">About</a>
+			<a href="#Pricing">Pricing</a>
+			<a href="#Cosmetics">Cosmetics</a>
+			<a href="#Team">Team</a>
+			<a href="#Contact">Contact</a>
+		</div>
+
+		<div class="credit">
+			created by <span>Tema Shabanov</span> | All Rights Reserved
+		</div>
+	</section>
+
+	<script type="text/javascript" src="{% static 'js/vanilla-tilt.js' %}"></script>
+	<script>
+		VanillaTilt.init(document.querySelector(".Cosmetics .box-container .box"),{
+		max: 25,
+		speed: 400,
+		glare: true,
+		"max-glare": 1,
+	});
+		VanillaTilt.init(document.querySelector(".Cosmetics .box-container .box2"),{
+		max: 25,
+		speed: 400,
+		glare: true,
+		"max-glare": 1,
+	});
+		VanillaTilt.init(document.querySelector(".Cosmetics .box-container .box3"),{
+		max: 25,
+		speed: 400,
+		glare: true,
+		"max-glare": 1,
+	});
+		VanillaTilt.init(document.querySelector(".Cosmetics .box-container .box4"),{
+		max: 25,
+		speed: 400,
+		glare: true,
+		"max-glare": 1,
+	});
+		VanillaTilt.init(document.querySelector(".Cosmetics .box-container .box5"),{
+		max: 25,
+		speed: 400,
+		glare: true,
+		"max-glare": 1,
+	});
+		VanillaTilt.init(document.querySelector(".Cosmetics .box-container .box6"),{
+		max: 25,
+		speed: 400,
+		glare: true,
+		"max-glare": 1,
+	});
+	</script>
+
+	<script src="{% static 'js/brb.js' %}"></script>
+
+
+
+
+<script src="https://kit.fontawesome.com/558b50b95a.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

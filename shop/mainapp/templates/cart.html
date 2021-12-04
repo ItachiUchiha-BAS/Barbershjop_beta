@@ -1,0 +1,86 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<style>
+    section{
+    padding: 2rem 7%;
+    margin-top: 90px;
+    }
+</style>
+
+<section class="Basket" id="Basket">
+		<h1 class="heading"> Your <span> Basket </span></h1>
+
+		<div class="row">
+			<div class="basketbody">
+				<div class="wrap">
+               {%for i in cart.products.all %}
+			    <div class="informblock">
+			    	<div class="tr">
+					    <i class="fas fa-user"></i>
+
+						<div class="ef">
+					        <h5 class="maintext">{{i.content_object.category}}</h5>
+				            <div class="underlineblock"></div>
+						</div>
+						<a href="{% url 'delete_from_cart' ct_model=i.content_object.get_model_name slug=i.content_object.slug %}"><i class="fas fa-trash"></i></a>
+
+				    </div>
+
+				   <div class="content">
+					 <div class="name">Name: {{i.content_object.title}}</div>
+					 <div class="price">Price: {{i.content_object.price}} $</div>
+
+					 <div class="qty" style="display:flex;">Quantity:
+						 <form action="{% url 'change_qty' ct_model=i.content_object.get_model_name slug=i.content_object.slug%}" method="post" >
+							 {% csrf_token %}
+							 <input  type="number"  name="qty" style="
+border:1px solid black;
+width: 50px;
+height:30px;
+font-size: 14px;
+font-weight: 1000;
+font-family:Britannic_Bold;
+border-radius: 10px;
+" value="{{i.qty}}" min="1"><input type="submit" style="
+border:1px solid black;
+width: 50px;
+height:30px;
+font-size: 14px;
+font-weight: 1000;
+font-family:Britannic_Bold;
+border-radius: 10px;" value="ok" >
+						 </form>
+					 </div>
+
+				   </div>
+
+
+			</div>
+
+            {%endfor %}
+
+
+
+
+			 <div class="informblock2">
+				<i class="fas fa-money-bill-wave"></i>
+				<div class="ef">
+					<h5 class="maintext2">Total Price: {{cart.final_price}} $<br>Total Products: {{cart.total_product}}</h5>
+				    <div class="underlineblock2"></div>
+				    <div class="fg">
+				    	<a href="{% url 'base' %}" class="btnshop">buy</a>
+				    </div>
+				</div>
+			</div>
+
+		    </div>
+			</div>
+
+		</div>
+
+
+
+	</section>-->
+
+{%endblock content%}
